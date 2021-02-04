@@ -136,5 +136,9 @@ files:
         TranslatorTest('translator.translator').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/99/stages/546/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/99/stages/546/implement">JetBrains
+    Academy</a>
+  time: Thu, 04 Feb 2021 00:46:03 UTC
+record: 4
