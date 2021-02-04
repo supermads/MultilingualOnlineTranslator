@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from sys import argv
 
 
 class Translator:
@@ -57,46 +58,22 @@ class Translator:
             f.write(self.translated_list[i] + '\n\n')
 
     def menu(self):
-        lang_options = {
-            1: 'Arabic',
-            2: 'German',
-            3: 'English',
-            4: 'Spanish',
-            5: 'French',
-            6: 'Hebrew',
-            7: 'Japanese',
-            8: 'Dutch',
-            9: 'Polish',
-            10: 'Portuguese',
-            11: 'Romanian',
-            12: 'Russian',
-            13: 'Turkish'
-        }
-
-        print('Hello, you\'re welcome to the translator. Translator supports:')
-        for key, value in lang_options.items():
-            print(f'{key}. {value}')
-
-        print('Type the number of your language:')
-        self.from_lang = lang_options.get(int(input()))
-
-        print('Type the number of language you want to translate to or \'0\' to translate to all languages:')
-        choice = int(input())
-
-        print('Type the word you want to translate:')
-        self.word = input().lower()
+        lang_options = ['Arabic', 'German', 'English', 'Spanish', 'French', 'Hebrew', 'Japanese',
+            'Dutch', 'Polish', 'Portuguese', 'Romanian', 'Russian', 'Turkish']
+        self.from_lang = argv[1].capitalize()
+        self.to_lang = argv[2].capitalize()
+        self.word = argv[3].lower()
 
         file_name = self.word + '.txt'
         with open(file_name, 'w') as f:
-            if choice == 0:
-                for i in range(1, 14):
-                    self.to_lang = lang_options.get(i)
+            if self.to_lang == 'All':
+                for i in range(len(lang_options)):
+                    self.to_lang = lang_options[i]
                     if self.to_lang != self.from_lang:
                         self.get_translations()
                         self.process_words(f)
                         self.process_sentences(f)
             else:
-                self.to_lang = lang_options.get(choice)
                 self.get_translations()
                 self.process_words(f)
                 self.process_sentences(f)

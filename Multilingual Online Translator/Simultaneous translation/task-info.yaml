@@ -177,13 +177,10 @@ files:
 - name: translator/hello.txt
   visible: true
   learner_created: true
-- name: what.txt
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/99/stages/547/implement#comment
 status: Solved
 feedback:
   message: Congratulations! Continue on <a href="https://hyperskill.org/projects/99/stages/547/implement">JetBrains
     Academy</a>
   time: Thu, 04 Feb 2021 19:17:59 UTC
-record: -1
+record: 5
