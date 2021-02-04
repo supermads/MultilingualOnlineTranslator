@@ -402,13 +402,10 @@ files:
     It's just the way he says hello.
     Bu sadece merhaba demenin bir yolu.
   learner_created: true
-- name: love.txt
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/99/stages/548/implement#comment
 status: Solved
 feedback:
   message: Congratulations! Continue on <a href="https://hyperskill.org/projects/99/stages/548/implement">JetBrains
     Academy</a>
   time: Thu, 04 Feb 2021 22:43:37 UTC
-record: -1
+record: 6

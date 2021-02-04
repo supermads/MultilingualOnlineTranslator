@@ -15,15 +15,23 @@ class Translator:
 
     def get_translations(self):
         address = f'https://context.reverso.net/translation/{self.from_lang.lower()}-{self.to_lang.lower()}/{self.word}'
-        # header added to avoid getting blocked from ReversoContext due to multiple requests
         s = requests.Session()
-        r = s.get(address, headers={'User-Agent': 'Mozilla/5.0'})
+        try:
+            # header added to avoid getting blocked from ReversoContext due to multiple requests
+            r = s.get(address, headers={'User-Agent': 'Mozilla/5.0'})
+        except:
+            print('Something wrong with your internet connection')
+            return False
         soup = BeautifulSoup(r.content, 'html.parser')
 
         word_translations = soup.find_all('div', {'id': 'translations-content'})
         for word in word_translations:
             word = word.text.replace('\n', ' ').strip()
             self.words_list = word.split('       ')
+
+        if len(self.words_list) == 0:
+            print(f'Sorry, unable to find {self.word}')
+            return False
 
         original_sentences = soup.find_all('div', {'class': 'src ltr'})
         if self.to_lang == 'Hebrew':
@@ -35,6 +43,7 @@ class Translator:
 
         self.original_list = [original.text.strip() for original in original_sentences]
         self.translated_list = [translated.text.strip() for translated in translated_sentences]
+        return True
 
     def process_words(self, f):
         print(f'\n{self.to_lang} Translations:')
@@ -64,19 +73,23 @@ class Translator:
         self.to_lang = argv[2].capitalize()
         self.word = argv[3].lower()
 
+        if self.to_lang != 'All' and self.to_lang not in lang_options:
+            print(f'Sorry, the program doesn\'t support {self.to_lang}')
+            return
+
         file_name = self.word + '.txt'
         with open(file_name, 'w') as f:
             if self.to_lang == 'All':
                 for i in range(len(lang_options)):
                     self.to_lang = lang_options[i]
                     if self.to_lang != self.from_lang:
-                        self.get_translations()
-                        self.process_words(f)
-                        self.process_sentences(f)
+                        if self.get_translations():
+                            self.process_words(f)
+                            self.process_sentences(f)
             else:
-                self.get_translations()
-                self.process_words(f)
-                self.process_sentences(f)
+                if self.get_translations():
+                    self.process_words(f)
+                    self.process_sentences(f)
 
 
 def main():
